@@ -1,7 +1,7 @@
 'use client';
 
 import { MuscleLoad, MUSCLE_GROUPS } from '@/lib/types';
-import { getRecoveryTimeHours, fatigueToColor } from '@/lib/fatigue';
+import { getRecoveryTimeDays, fatigueToColor } from '@/lib/fatigue';
 
 interface Props {
   fatigue: MuscleLoad;
@@ -12,9 +12,9 @@ export default function RecoveryTimeline({ fatigue }: Props) {
 
   const items = MUSCLE_GROUPS.map(muscle => ({
     muscle,
-    hours: getRecoveryTimeHours(fatigue[muscle]),
+    days: getRecoveryTimeDays(fatigue[muscle]),
     fatigue: fatigue[muscle],
-  })).sort((a, b) => b.hours - a.hours);
+  })).sort((a, b) => b.days - a.days);
 
   return (
     <div className="bg-card border border-border rounded-xl p-6">
@@ -32,8 +32,8 @@ export default function RecoveryTimeline({ fatigue }: Props) {
                 }}
               />
             </div>
-            <span className="text-xs text-muted w-16 text-right">
-              {item.hours === 0 ? 'Recovered' : `${item.hours}h left`}
+            <span className="text-xs text-muted w-20 text-right">
+              {item.days === 0 ? 'Recovered' : `${item.days}d left`}
             </span>
           </div>
         ))}

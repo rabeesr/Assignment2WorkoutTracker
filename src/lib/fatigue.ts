@@ -21,10 +21,10 @@ export function calculateCurrentFatigue(sessions: Session[], now: Date = new Dat
   return fatigue;
 }
 
-export function getRecoveryTimeHours(currentFatigue: number): number {
+export function getRecoveryTimeDays(currentFatigue: number): number {
   if (currentFatigue <= RECOVERY_THRESHOLD) return 0;
   const days = -Math.log(RECOVERY_THRESHOLD / currentFatigue) / DECAY_CONSTANT;
-  return Math.round(days * 24);
+  return Number(days.toFixed(2));
 }
 
 export function getMaxFatigue(fatigue: MuscleLoad): { muscle: keyof MuscleLoad; value: number } {
