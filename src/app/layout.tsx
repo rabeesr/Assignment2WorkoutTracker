@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FitnessProvider } from "@/context/FitnessContext";
 import Navbar from "@/components/layout/Navbar";
+import AIChatbot from "@/components/layout/AIChatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
             {children}
           </main>
+          <AIChatbot />
         </FitnessProvider>
       </body>
     </html>
