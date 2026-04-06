@@ -42,22 +42,22 @@ function LiftingProgress({ sessions }: { sessions: Session[] }) {
       <ChartCard title="Volume Over Time (sets × reps × weight)">
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
             <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
-            <Line type="monotone" dataKey="volume" stroke="#0ea5e9" strokeWidth={2} dot={{ fill: '#0ea5e9' }} />
+            <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
+            <Line type="monotone" dataKey="volume" stroke="#2563eb" strokeWidth={2} dot={{ fill: '#2563eb' }} />
           </LineChart>
         </ResponsiveContainer>
       </ChartCard>
       <ChartCard title="Weight Progression">
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
             <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
-            <Bar dataKey="weight" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+            <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
+            <Bar dataKey="weight" fill="#3b82f6" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -85,22 +85,22 @@ function RunningProgress({ sessions }: { sessions: Session[] }) {
       <ChartCard title="Distance Over Time (km)">
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
             <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
-            <Bar dataKey="distance" fill="#10b981" radius={[4, 4, 0, 0]} />
+            <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
+            <Bar dataKey="distance" fill="#059669" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
       <ChartCard title="Pace Trend (min/km — lower is faster)">
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
             <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
-            <Line type="monotone" dataKey="pace" stroke="#10b981" strokeWidth={2} dot={{ fill: '#10b981' }} />
+            <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
+            <Line type="monotone" dataKey="pace" stroke="#059669" strokeWidth={2} dot={{ fill: '#059669' }} />
           </LineChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -124,10 +124,10 @@ function BoxingProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Rounds Per Session">
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
           <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+          <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
           <Bar dataKey="rounds" fill="#ef4444" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -163,10 +163,10 @@ function BasketballProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Sessions Per Week">
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="week" tick={{ fill: '#6b7280', fontSize: 12 }} />
           <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} allowDecimals={false} />
-          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+          <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
           <Bar dataKey="sessions" fill="#eab308" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -189,11 +189,11 @@ function CaloriesProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Calorie Burn Per Session">
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
           <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
-          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
-          <Area type="monotone" dataKey="calories" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.2} strokeWidth={2} />
+          <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827' }} />
+          <Area type="monotone" dataKey="calories" stroke="#2563eb" fill="#2563eb" fillOpacity={0.2} strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
     </ChartCard>
@@ -202,8 +202,8 @@ function CaloriesProgress({ sessions }: { sessions: Session[] }) {
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <h3 className="text-sm font-medium text-muted mb-4">{title}</h3>
+    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+      <h3 className="text-sm font-medium text-gray-500 mb-4">{title}</h3>
       {children}
     </div>
   );
@@ -211,8 +211,8 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
 
 function EmptyState({ activity }: { activity: string }) {
   return (
-    <div className="bg-card border border-border rounded-xl p-8 text-center">
-      <p className="text-muted">No {activity} sessions logged yet.</p>
+    <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center">
+      <p className="text-gray-500">No {activity} sessions logged yet.</p>
     </div>
   );
 }
@@ -233,7 +233,7 @@ export default function ProgressPage() {
             className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
               activeTab === tab.type
                 ? 'bg-accent text-white'
-                : 'text-muted hover:text-foreground'
+                : 'text-gray-500 hover:text-foreground'
             }`}
           >
             {tab.label}

@@ -64,26 +64,20 @@ export function getMostRecoveredMuscle(fatigue: MuscleLoad): keyof MuscleLoad {
 }
 
 export function fatigueToColor(fatigue: number, maxFatigue: number): string {
-  if (maxFatigue === 0) return 'rgb(16, 185, 129)';
+  if (maxFatigue === 0) return 'rgb(5, 150, 105)';
   const ratio = Math.min(fatigue / Math.max(maxFatigue, 5), 1);
-  // Clinical gradient: teal-green → amber → red
-  if (ratio < 0.33) {
-    const t = ratio / 0.33;
-    const r = Math.round(16 + (14 * t));
-    const g = Math.round(185 - (20 * t));
-    const b = Math.round(129 - (90 * t));
-    return `rgb(${r}, ${g}, ${b})`;
-  } else if (ratio < 0.66) {
-    const t = (ratio - 0.33) / 0.33;
-    const r = Math.round(30 + (215 * t));
-    const g = Math.round(165 - (7 * t));
-    const b = Math.round(39 - (28 * t));
+  // Clean gradient: green → amber → red
+  if (ratio < 0.5) {
+    const t = ratio / 0.5;
+    const r = Math.round(5 + (212 * t));
+    const g = Math.round(150 + (69 * t) - (100 * t * t));
+    const b = Math.round(105 - (99 * t));
     return `rgb(${r}, ${g}, ${b})`;
   } else {
-    const t = (ratio - 0.66) / 0.34;
-    const r = Math.round(245 - (6 * t));
-    const g = Math.round(158 - (90 * t));
-    const b = Math.round(11 + (57 * t));
+    const t = (ratio - 0.5) / 0.5;
+    const r = Math.round(217 + (3 * t));
+    const g = Math.round(119 - (81 * t));
+    const b = Math.round(6 + (32 * t));
     return `rgb(${r}, ${g}, ${b})`;
   }
 }

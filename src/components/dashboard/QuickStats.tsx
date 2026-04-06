@@ -1,6 +1,6 @@
 'use client';
 
-import { Session, ActivityType } from '@/lib/types';
+import { Session } from '@/lib/types';
 
 interface Props {
   sessions: Session[];
@@ -21,20 +21,18 @@ export default function QuickStats({ sessions }: Props) {
   const totalDuration = thisWeek.reduce((sum, s) => sum + s.duration, 0);
 
   const stats = [
-    { label: 'Sessions This Week', value: thisWeek.length, accent: false },
-    { label: 'Most Trained', value: mostTrained ? mostTrained[0] : '—', accent: false },
-    { label: 'Weekly Calories', value: `${totalCalories.toLocaleString()} kcal`, accent: true },
-    { label: 'Total Duration', value: `${totalDuration} min`, accent: false },
+    { label: 'Sessions This Week', value: String(thisWeek.length) },
+    { label: 'Most Trained', value: mostTrained ? mostTrained[0] : '—' },
+    { label: 'Weekly Calories', value: `${totalCalories.toLocaleString()} kcal` },
+    { label: 'Total Duration', value: `${totalDuration} min` },
   ];
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
       {stats.map(stat => (
-        <div key={stat.label} className="bg-card border border-border rounded-xl p-4">
-          <p className="text-xs text-muted mb-1">{stat.label}</p>
-          <p className={`text-xl font-bold capitalize ${stat.accent ? 'text-accent' : 'text-foreground'}`}>
-            {stat.value}
-          </p>
+        <div key={stat.label} className="bg-white border border-gray-200 rounded-2xl p-4">
+          <p className="text-xs text-gray-400 mb-1">{stat.label}</p>
+          <p className="text-xl font-bold text-gray-900 capitalize">{stat.value}</p>
         </div>
       ))}
     </div>

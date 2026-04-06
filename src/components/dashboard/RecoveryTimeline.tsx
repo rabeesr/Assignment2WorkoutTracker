@@ -17,13 +17,13 @@ export default function RecoveryTimeline({ fatigue }: Props) {
   })).sort((a, b) => b.days - a.days);
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <h2 className="text-lg font-semibold mb-4">Recovery Timeline</h2>
+    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+      <h2 className="text-base font-semibold text-gray-900 mb-4">Recovery Timeline</h2>
       <div className="space-y-3">
         {items.map(item => (
           <div key={item.muscle} className="flex items-center gap-3">
-            <span className="text-sm text-muted w-20 capitalize">{item.muscle}</span>
-            <div className="flex-1 bg-border/50 rounded-full h-2.5 overflow-hidden">
+            <span className="text-sm text-gray-500 w-20 capitalize">{item.muscle}</span>
+            <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full transition-all"
                 style={{
@@ -32,8 +32,8 @@ export default function RecoveryTimeline({ fatigue }: Props) {
                 }}
               />
             </div>
-            <span className="text-xs text-muted w-20 text-right">
-              {item.days === 0 ? 'Recovered' : `${item.days}d left`}
+            <span className="text-xs text-gray-400 w-20 text-right font-mono">
+              {item.days === 0 ? 'Recovered' : `${item.days}d`}
             </span>
           </div>
         ))}

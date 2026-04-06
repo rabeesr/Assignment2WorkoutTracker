@@ -12,23 +12,23 @@ export default function RestDaySuggestion({ fatigue }: Props) {
   const bestMuscle = getMostRecoveredMuscle(fatigue);
 
   return (
-    <div className={`border rounded-xl p-4 ${
+    <div className={`rounded-2xl p-4 border ${
       rest
-        ? 'bg-red/10 border-red/30'
-        : 'bg-green/10 border-green/30'
+        ? 'bg-red-50 border-red-200'
+        : 'bg-emerald-50 border-emerald-200'
     }`}>
       {rest ? (
         <div>
-          <p className="font-semibold text-red">Rest Recommended</p>
-          <p className="text-sm text-muted mt-1">
+          <p className="font-semibold text-red-700">Rest Recommended</p>
+          <p className="text-sm text-red-600/70 mt-0.5">
             Your overall fatigue is high. Consider taking a rest day to recover.
           </p>
         </div>
       ) : (
         <div>
-          <p className="font-semibold text-green">Good to Train</p>
-          <p className="text-sm text-muted mt-1">
-            <span className="capitalize font-medium text-foreground">{bestMuscle}</span> is most recovered — consider targeting it today.
+          <p className="font-semibold text-emerald-700">Good to Train</p>
+          <p className="text-sm text-emerald-600/70 mt-0.5">
+            <span className="capitalize font-medium text-emerald-800">{bestMuscle}</span> is most recovered — consider targeting it today.
           </p>
         </div>
       )}
