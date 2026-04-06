@@ -9,6 +9,8 @@ The app tracks:
 * Workout sessions
 * Muscle fatigue (across all activities)
 * Performance progression
+* Recovery timelines and suggested rest days
+* Calorie / energy expenditure estimates
 
 All data is stored in client-side state (no database). Data resets on refresh.
 
@@ -46,6 +48,9 @@ Instead of siloed trackers (lifting vs cardio), this app creates a **shared mode
 
 * Color-coded body map (green → red)
 * Simple cards for stats
+* Per-muscle recovery timeline (e.g., "Shoulders: ~18 hrs to green")
+* Suggested rest days based on fatigue decay thresholds
+* Daily estimated calorie burn summary
 
 ---
 
@@ -73,16 +78,24 @@ Instead of siloed trackers (lifting vs cardio), this app creates a **shared mode
 
    * Duration
    * Intensity (1–10 slider)
-   * Optional notes
+   * Notes (free text)
+   * Tags (e.g., "deload week", "competition prep", "felt sluggish")
 
 4. On submit:
 
    * Map activity → muscle groups
    * Compute fatigue contribution
+   * Estimate calories burned (MET-based)
    * Store session in state
 
+**Workout Templates:**
+
+* Users can save common sessions as templates (e.g., "Push Day", "5K Run")
+* Templates pre-fill activity type, metrics, and default intensity
+* Logging from a template should take < 5 seconds (one-tap + confirm)
+
 **Key Requirement:**
-Logging should take < 15 seconds
+Logging should take < 15 seconds (manual) or < 5 seconds (from template)
 
 ---
 
@@ -103,7 +116,9 @@ Logging should take < 15 seconds
 **Features:**
 
 * Filter by activity type
+* Filter by tags
 * Expand row to view details
+* View notes and tags per session
 
 ---
 
@@ -127,6 +142,11 @@ Logging should take < 15 seconds
 
   * Sessions per week
 
+**Energy Expenditure:**
+
+* Daily / weekly calorie burn trends
+* Breakdown by activity type
+
 **Simple Visuals:**
 
 * Line charts or basic trend indicators
@@ -146,6 +166,9 @@ Logging should take < 15 seconds
   duration: number,
   intensity: number (1–10),
   metrics: object, // activity-specific
+  notes: string,
+  tags: string[],
+  caloriesBurned: number,
   muscleLoad: {
     chest: number,
     shoulders: number,
@@ -153,6 +176,20 @@ Logging should take < 15 seconds
     arms: number,
     core: number
   }
+}
+```
+
+### Workout Template Object
+
+```
+{
+  id: string,
+  name: string,           // e.g., "Push Day", "5K Run"
+  type: "lifting" | "boxing" | "running" | "basketball",
+  defaultMetrics: object,  // pre-filled activity-specific values
+  defaultIntensity: number (1–10),
+  defaultDuration: number,
+  defaultTags: string[]
 }
 ```
 
@@ -189,6 +226,45 @@ Example:
   * calves: 0.2
   * core: 0.2
   * shoulders: 0.1
+
+---
+
+## Calorie Estimation (MET-based)
+
+Each activity has a MET (Metabolic Equivalent of Task) value scaled by intensity:
+
+| Activity    | Base MET | Intensity Scaling         |
+| ----------- | -------- | ------------------------- |
+| Lifting     | 5.0      | MET × (intensity / 7)    |
+| Boxing      | 7.5      | MET × (intensity / 7)    |
+| Running     | 9.0      | MET × (intensity / 7)    |
+| Basketball  | 6.5      | MET × (intensity / 7)    |
+
+### Formula
+
+```
+calories = MET × body_weight_kg × duration_hours
+```
+
+* Default body weight: 75 kg (user-configurable)
+* Intensity slider adjusts effective MET
+
+---
+
+## Recovery & Rest Day Suggestions
+
+### Recovery Timeline
+
+Each muscle group shows estimated time until fatigue drops below a "recovered" threshold (e.g., fatigue < 10):
+
+```
+time_to_recovery = -ln(threshold / current_fatigue) / k
+```
+
+### Suggested Rest Days
+
+* A rest day is suggested when **total body fatigue** (sum of all muscle groups) exceeds a configurable threshold
+* Dashboard displays: "Rest recommended" or "Good to train — [muscle group] is most recovered"
 
 ---
 
@@ -248,16 +324,20 @@ No persistence required.
 
 Must have:
 
-* Log session
+* Log session (with notes and tags)
 * Muscle mapping
 * Fatigue calculation
 * Heatmap visualization
+* Recovery timeline per muscle group
+* Suggested rest days
+* Calorie/energy estimation (MET-based)
 * 4 working pages
 
 Nice to have:
 
-* Filters
-* Trend charts
+* Workout templates (save & reuse sessions)
+* Filters (by activity type and tags)
+* Trend charts (including calorie trends)
 * PR tracking
 
 ---
@@ -268,6 +348,8 @@ Nice to have:
 * User accounts
 * Smarter fatigue modeling
 * Recommendations ("Train legs today?")
+* User-configurable body weight for calorie accuracy
+* Template sharing / community templates
 
 ---
 
