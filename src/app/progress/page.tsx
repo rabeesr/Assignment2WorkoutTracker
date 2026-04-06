@@ -42,22 +42,22 @@ function LiftingProgress({ sessions }: { sessions: Session[] }) {
       <ChartCard title="Volume Over Time (sets × reps × weight)">
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-            <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
-            <Line type="monotone" dataKey="volume" stroke="#6366f1" strokeWidth={2} dot={{ fill: '#6366f1' }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+            <Line type="monotone" dataKey="volume" stroke="#0ea5e9" strokeWidth={2} dot={{ fill: '#0ea5e9' }} />
           </LineChart>
         </ResponsiveContainer>
       </ChartCard>
       <ChartCard title="Weight Progression">
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-            <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
-            <Bar dataKey="weight" fill="#818cf8" radius={[4, 4, 0, 0]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+            <Bar dataKey="weight" fill="#38bdf8" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -85,22 +85,22 @@ function RunningProgress({ sessions }: { sessions: Session[] }) {
       <ChartCard title="Distance Over Time (km)">
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-            <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
-            <Bar dataKey="distance" fill="#22c55e" radius={[4, 4, 0, 0]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+            <Bar dataKey="distance" fill="#10b981" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
       <ChartCard title="Pace Trend (min/km — lower is faster)">
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-            <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-            <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
-            <Line type="monotone" dataKey="pace" stroke="#22c55e" strokeWidth={2} dot={{ fill: '#22c55e' }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+            <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+            <Line type="monotone" dataKey="pace" stroke="#10b981" strokeWidth={2} dot={{ fill: '#10b981' }} />
           </LineChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -124,10 +124,10 @@ function BoxingProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Rounds Per Session">
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-          <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-          <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-          <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+          <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
           <Bar dataKey="rounds" fill="#ef4444" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -163,10 +163,10 @@ function BasketballProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Sessions Per Week">
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-          <XAxis dataKey="week" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-          <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} allowDecimals={false} />
-          <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <XAxis dataKey="week" tick={{ fill: '#6b7280', fontSize: 12 }} />
+          <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} allowDecimals={false} />
+          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
           <Bar dataKey="sessions" fill="#eab308" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -189,11 +189,11 @@ function CaloriesProgress({ sessions }: { sessions: Session[] }) {
     <ChartCard title="Calorie Burn Per Session">
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#2a2d37" />
-          <XAxis dataKey="date" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-          <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-          <Tooltip contentStyle={{ background: '#1a1d27', border: '1px solid #2a2d37', borderRadius: '8px', color: '#e5e7eb' }} />
-          <Area type="monotone" dataKey="calories" stroke="#6366f1" fill="#6366f1" fillOpacity={0.2} strokeWidth={2} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#1e2028" />
+          <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+          <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} />
+          <Tooltip contentStyle={{ background: '#111318', border: '1px solid #1e2028', borderRadius: '8px', color: '#e2e4e9' }} />
+          <Area type="monotone" dataKey="calories" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.2} strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
     </ChartCard>
