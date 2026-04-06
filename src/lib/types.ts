@@ -62,7 +62,8 @@ export type FitnessAction =
   | { type: 'DELETE_SESSION'; payload: string }
   | { type: 'ADD_TEMPLATE'; payload: WorkoutTemplate }
   | { type: 'DELETE_TEMPLATE'; payload: string }
-  | { type: 'SET_BODY_WEIGHT'; payload: number };
+  | { type: 'SET_BODY_WEIGHT'; payload: number }
+  | { type: 'INIT'; payload: FitnessState };
 
 export const MUSCLE_GROUPS: (keyof MuscleLoad)[] = [
   'chest', 'shoulders', 'back', 'arms', 'core', 'legs'

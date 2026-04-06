@@ -1,13 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect, ReactNode } from 'react';
 import { FitnessState, FitnessAction, Session, WorkoutTemplate } from '@/lib/types';
 import { SEED_SESSIONS } from '@/lib/seedData';
 import { DEFAULT_TEMPLATES } from '@/lib/templates';
 
-const initialState: FitnessState = {
-  sessions: SEED_SESSIONS,
-  templates: DEFAULT_TEMPLATES,
+const emptyState: FitnessState = {
+  sessions: [],
+  templates: [],
   bodyWeightKg: 75,
 };
 
@@ -23,6 +23,8 @@ function fitnessReducer(state: FitnessState, action: FitnessAction): FitnessStat
       return { ...state, templates: state.templates.filter(t => t.id !== action.payload) };
     case 'SET_BODY_WEIGHT':
       return { ...state, bodyWeightKg: action.payload };
+    case 'INIT':
+      return action.payload;
     default:
       return state;
   }
@@ -36,12 +38,26 @@ interface FitnessContextValue {
   addTemplate: (template: WorkoutTemplate) => void;
   deleteTemplate: (id: string) => void;
   getSession: (id: string) => Session | undefined;
+  isReady: boolean;
 }
 
 const FitnessContext = createContext<FitnessContextValue | null>(null);
 
 export function FitnessProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(fitnessReducer, initialState);
+  const [state, dispatch] = useReducer(fitnessReducer, emptyState);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    dispatch({
+      type: 'INIT',
+      payload: {
+        sessions: SEED_SESSIONS,
+        templates: DEFAULT_TEMPLATES,
+        bodyWeightKg: 75,
+      },
+    });
+    setIsReady(true);
+  }, []);
 
   const addSession = (session: Session) => dispatch({ type: 'ADD_SESSION', payload: session });
   const deleteSession = (id: string) => dispatch({ type: 'DELETE_SESSION', payload: id });
@@ -50,7 +66,7 @@ export function FitnessProvider({ children }: { children: ReactNode }) {
   const getSession = (id: string) => state.sessions.find(s => s.id === id);
 
   return (
-    <FitnessContext.Provider value={{ state, dispatch, addSession, deleteSession, addTemplate, deleteTemplate, getSession }}>
+    <FitnessContext.Provider value={{ state, dispatch, addSession, deleteSession, addTemplate, deleteTemplate, getSession, isReady }}>
       {children}
     </FitnessContext.Provider>
   );
