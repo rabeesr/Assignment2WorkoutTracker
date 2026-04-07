@@ -25,8 +25,8 @@ export default function ActivitySelector({ value, onChange }: Props) {
           onClick={() => onChange(activity.type)}
           className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all cursor-pointer ${
             value === activity.type
-              ? 'border-accent bg-accent/10 text-accent'
-              : 'border-border bg-card hover:border-accent/50 text-muted hover:text-foreground'
+              ? 'border-gray-900 bg-gray-50 text-gray-900'
+              : 'border-gray-200 bg-white hover:border-gray-400 text-gray-500 hover:text-gray-900'
           }`}
         >
           <span className="text-2xl">{activity.icon}</span>

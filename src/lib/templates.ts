@@ -5,10 +5,27 @@ export const DEFAULT_TEMPLATES: WorkoutTemplate[] = [
     id: 'tpl-push-day',
     name: 'Push Day',
     type: 'lifting',
-    defaultMetrics: { exercise: 'Bench Press', sets: 4, reps: 10, weight: 135 },
+    defaultMetrics: { exercises: [
+      { name: 'Bench Press', sets: 4, reps: 10, weight: 135 },
+      { name: 'Overhead Press', sets: 3, reps: 8, weight: 85 },
+      { name: 'Incline Dumbbell Press', sets: 3, reps: 12, weight: 45 },
+    ]},
     defaultIntensity: 7,
     defaultDuration: 60,
     defaultTags: ['push'],
+  },
+  {
+    id: 'tpl-pull-day',
+    name: 'Pull Day',
+    type: 'lifting',
+    defaultMetrics: { exercises: [
+      { name: 'Deadlift', sets: 3, reps: 5, weight: 225 },
+      { name: 'Barbell Row', sets: 4, reps: 8, weight: 135 },
+      { name: 'Bicep Curl', sets: 3, reps: 12, weight: 30 },
+    ]},
+    defaultIntensity: 7,
+    defaultDuration: 55,
+    defaultTags: ['pull'],
   },
   {
     id: 'tpl-5k-run',

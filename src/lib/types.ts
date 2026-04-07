@@ -1,5 +1,7 @@
 export type ActivityType = 'lifting' | 'boxing' | 'running' | 'basketball';
 
+export type Location = 'gym' | 'home' | 'outdoor' | 'park' | 'other';
+
 export interface MuscleLoad {
   chest: number;
   shoulders: number;
@@ -9,11 +11,15 @@ export interface MuscleLoad {
   legs: number;
 }
 
-export interface LiftingMetrics {
-  exercise: string;
+export interface LiftingExercise {
+  name: string;
   sets: number;
   reps: number;
   weight: number;
+}
+
+export interface LiftingMetrics {
+  exercises: LiftingExercise[];
 }
 
 export interface BoxingMetrics {
@@ -39,6 +45,10 @@ export interface Session {
   tags: string[];
   caloriesBurned: number;
   muscleLoad: MuscleLoad;
+  avgHeartRate?: number;
+  maxHeartRate?: number;
+  energyLevel?: number; // 1-5, pre-workout
+  location?: Location;
 }
 
 export interface WorkoutTemplate {
@@ -49,6 +59,14 @@ export interface WorkoutTemplate {
   defaultIntensity: number;
   defaultDuration: number;
   defaultTags: string[];
+}
+
+export interface PersonalRecord {
+  exercise: string;
+  weight: number;
+  reps: number;
+  date: string;
+  sessionId: string;
 }
 
 export interface FitnessState {
@@ -67,4 +85,12 @@ export type FitnessAction =
 
 export const MUSCLE_GROUPS: (keyof MuscleLoad)[] = [
   'chest', 'shoulders', 'back', 'arms', 'core', 'legs'
+];
+
+export const LOCATIONS: { value: Location; label: string }[] = [
+  { value: 'gym', label: 'Gym' },
+  { value: 'home', label: 'Home' },
+  { value: 'outdoor', label: 'Outdoor' },
+  { value: 'park', label: 'Park' },
+  { value: 'other', label: 'Other' },
 ];

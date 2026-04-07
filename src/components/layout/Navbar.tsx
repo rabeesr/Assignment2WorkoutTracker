@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { href: '/log', label: 'Log Session' },
   { href: '/history', label: 'History' },
   { href: '/progress', label: 'Progress' },
+  { href: '/records', label: 'Records' },
+  { href: '/templates', label: 'Templates' },
 ];
 
 export default function Navbar() {
@@ -27,7 +29,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
