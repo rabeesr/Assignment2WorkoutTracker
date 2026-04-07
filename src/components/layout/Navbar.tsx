@@ -5,11 +5,14 @@ import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Dashboard' },
-  { href: '/log', label: 'Log Session' },
+  { href: '/log', label: 'Log' },
   { href: '/history', label: 'History' },
   { href: '/progress', label: 'Progress' },
   { href: '/records', label: 'Records' },
+  { href: '/goals', label: 'Goals' },
+  { href: '/report', label: 'Report' },
   { href: '/templates', label: 'Templates' },
+  { href: '/photos', label: 'Photos' },
 ];
 
 export default function Navbar() {

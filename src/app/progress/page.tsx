@@ -8,12 +8,13 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
 } from 'recharts';
 
-const TABS: { type: ActivityType | 'calories'; label: string }[] = [
+const TABS: { type: ActivityType | 'calories' | 'heart_rate'; label: string }[] = [
   { type: 'lifting', label: 'Lifting' },
   { type: 'running', label: 'Running' },
   { type: 'boxing', label: 'Boxing' },
   { type: 'basketball', label: 'Basketball' },
   { type: 'calories', label: 'Calories' },
+  { type: 'heart_rate', label: 'Heart Rate' },
 ];
 
 const TOOLTIP_STYLE = { background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', color: '#111827', fontSize: '12px' };
@@ -214,6 +215,84 @@ function CaloriesProgress({ sessions }: { sessions: Session[] }) {
   );
 }
 
+const HR_ZONES = [
+  { name: 'Zone 1 (Recovery)', min: 0, max: 0.6, color: '#93c5fd', label: '50-60%' },
+  { name: 'Zone 2 (Endurance)', min: 0.6, max: 0.7, color: '#4ade80', label: '60-70%' },
+  { name: 'Zone 3 (Tempo)', min: 0.7, max: 0.8, color: '#facc15', label: '70-80%' },
+  { name: 'Zone 4 (Threshold)', min: 0.8, max: 0.9, color: '#fb923c', label: '80-90%' },
+  { name: 'Zone 5 (Max)', min: 0.9, max: 1.0, color: '#ef4444', label: '90-100%' },
+];
+
+function HeartRateProgress({ sessions }: { sessions: Session[] }) {
+  const hrSessions = sessions.filter(s => s.avgHeartRate).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const maxHR = 220; // estimated max
+
+  const zoneDistribution = useMemo(() => {
+    const counts = [0, 0, 0, 0, 0];
+    hrSessions.forEach(s => {
+      const ratio = (s.avgHeartRate || 0) / maxHR;
+      if (ratio < 0.6) counts[0]++;
+      else if (ratio < 0.7) counts[1]++;
+      else if (ratio < 0.8) counts[2]++;
+      else if (ratio < 0.9) counts[3]++;
+      else counts[4]++;
+    });
+    return counts;
+  }, [hrSessions]);
+
+  const total = hrSessions.length;
+
+  const hrTrendData = hrSessions.map(s => ({
+    date: formatDate(s.date),
+    avg: s.avgHeartRate,
+    max: s.maxHeartRate,
+  }));
+
+  if (hrSessions.length === 0) {
+    return <EmptyState activity="sessions with heart rate data" />;
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Zone distribution */}
+      <ChartCard title="Heart Rate Zone Distribution">
+        <div className="space-y-3">
+          {HR_ZONES.map((zone, i) => (
+            <div key={zone.name} className="flex items-center gap-3">
+              <span className="text-xs text-gray-500 w-32 truncate">{zone.name}</span>
+              <div className="flex-1 bg-gray-100 rounded-full h-6 overflow-hidden relative">
+                <div
+                  className="h-full rounded-full transition-all duration-700 flex items-center justify-end pr-2"
+                  style={{ width: `${total > 0 ? (zoneDistribution[i] / total) * 100 : 0}%`, backgroundColor: zone.color, minWidth: zoneDistribution[i] > 0 ? '32px' : '0' }}
+                >
+                  {zoneDistribution[i] > 0 && (
+                    <span className="text-[10px] font-bold text-white drop-shadow">{zoneDistribution[i]}</span>
+                  )}
+                </div>
+              </div>
+              <span className="text-[10px] text-gray-400 w-16 text-right">{zone.label}</span>
+            </div>
+          ))}
+        </div>
+      </ChartCard>
+
+      {/* HR trend */}
+      <ChartCard title="Heart Rate Over Time">
+        <ResponsiveContainer width="100%" height={250}>
+          <LineChart data={hrTrendData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} domain={['dataMin - 10', 'dataMax + 10']} unit=" bpm" />
+            <Tooltip contentStyle={TOOLTIP_STYLE} />
+            <Line type="monotone" dataKey="avg" stroke="#2563eb" strokeWidth={2} dot={{ fill: '#2563eb', r: 3 }} name="Avg HR" />
+            <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1.5} strokeDasharray="4 4" dot={{ fill: '#ef4444', r: 2 }} name="Max HR" />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartCard>
+    </div>
+  );
+}
+
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-6">
@@ -229,7 +308,7 @@ function EmptyState({ activity }: { activity: string }) {
 
 export default function ProgressPage() {
   const { state } = useFitness();
-  const [activeTab, setActiveTab] = useState<ActivityType | 'calories'>('lifting');
+  const [activeTab, setActiveTab] = useState<ActivityType | 'calories' | 'heart_rate'>('lifting');
 
   return (
     <div className="space-y-6">
@@ -248,6 +327,7 @@ export default function ProgressPage() {
       {activeTab === 'boxing' && <BoxingProgress sessions={state.sessions} />}
       {activeTab === 'basketball' && <BasketballProgress sessions={state.sessions} />}
       {activeTab === 'calories' && <CaloriesProgress sessions={state.sessions} />}
+      {activeTab === 'heart_rate' && <HeartRateProgress sessions={state.sessions} />}
     </div>
   );
 }

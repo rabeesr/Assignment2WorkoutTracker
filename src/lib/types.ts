@@ -49,6 +49,7 @@ export interface Session {
   maxHeartRate?: number;
   energyLevel?: number; // 1-5, pre-workout
   location?: Location;
+  photo?: string; // base64 data URL
 }
 
 export interface WorkoutTemplate {
@@ -69,10 +70,24 @@ export interface PersonalRecord {
   sessionId: string;
 }
 
+export type GoalType = 'weight' | 'run_pace' | 'run_distance' | 'sessions_per_week' | 'custom';
+
+export interface Goal {
+  id: string;
+  title: string;
+  type: GoalType;
+  target: number;
+  unit: string;
+  exercise?: string; // for weight goals
+  createdAt: string;
+  completedAt?: string;
+}
+
 export interface FitnessState {
   sessions: Session[];
   templates: WorkoutTemplate[];
   bodyWeightKg: number;
+  goals: Goal[];
 }
 
 export type FitnessAction =
@@ -81,6 +96,9 @@ export type FitnessAction =
   | { type: 'ADD_TEMPLATE'; payload: WorkoutTemplate }
   | { type: 'DELETE_TEMPLATE'; payload: string }
   | { type: 'SET_BODY_WEIGHT'; payload: number }
+  | { type: 'ADD_GOAL'; payload: Goal }
+  | { type: 'DELETE_GOAL'; payload: string }
+  | { type: 'COMPLETE_GOAL'; payload: string }
   | { type: 'INIT'; payload: FitnessState };
 
 export const MUSCLE_GROUPS: (keyof MuscleLoad)[] = [

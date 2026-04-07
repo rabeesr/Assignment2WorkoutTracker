@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import confetti from 'canvas-confetti';
 import { ActivityType, ActivityMetrics, LiftingMetrics, BoxingMetrics, RunningMetrics, WorkoutTemplate, Session, Location, LOCATIONS } from '@/lib/types';
 import { useFitness } from '@/context/FitnessContext';
 import { computeMuscleLoad } from '@/lib/muscleMapping';
@@ -41,6 +42,8 @@ export default function SessionForm() {
   const [energyLevel, setEnergyLevel] = useState<number>(3);
   const [location, setLocation] = useState<Location>('gym');
   const [bodyWeight, setBodyWeight] = useState<string>(String(state.bodyWeightKg));
+  const [photo, setPhoto] = useState<string | undefined>(undefined);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleActivityChange = (type: ActivityType) => {
     setActivityType(type);
@@ -79,9 +82,32 @@ export default function SessionForm() {
       ...(maxHeartRate ? { maxHeartRate: Number(maxHeartRate) } : {}),
       energyLevel,
       location,
+      photo,
     };
 
+    // Check for new PRs before adding session
+    let isNewPR = false;
+    if (activityType === 'lifting') {
+      const lm = metrics as LiftingMetrics;
+      const existingBests: Record<string, number> = {};
+      state.sessions.filter(s => s.type === 'lifting').forEach(s => {
+        ((s.metrics as LiftingMetrics).exercises || []).forEach(ex => {
+          if (!ex.name) return;
+          const key = ex.name.toLowerCase();
+          if (!existingBests[key] || ex.weight > existingBests[key]) existingBests[key] = ex.weight;
+        });
+      });
+      (lm.exercises || []).forEach(ex => {
+        if (ex.name && ex.weight > (existingBests[ex.name.toLowerCase()] || 0)) isNewPR = true;
+      });
+    }
+
     addSession(session);
+
+    if (isNewPR) {
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#FFD700', '#FFA500', '#FF6347', '#2563eb', '#16a34a'] });
+      setTimeout(() => confetti({ particleCount: 80, spread: 100, origin: { y: 0.5 } }), 300);
+    }
 
     if (saveAsTemplate && templateName.trim()) {
       addTemplate({
@@ -225,6 +251,30 @@ export default function SessionForm() {
               data-testid="notes-input"
               className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-accent resize-none"
             />
+          </div>
+
+          {/* Photo upload */}
+          <div className="bg-white border border-gray-200 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-gray-500 mb-2">Progress Photo (optional)</h3>
+            {photo ? (
+              <div className="relative">
+                <img src={photo} alt="Progress" className="w-full h-40 object-cover rounded-lg" />
+                <button type="button" onClick={() => setPhoto(undefined)}
+                  className="absolute top-2 right-2 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:text-red-500 cursor-pointer text-sm">×</button>
+              </div>
+            ) : (
+              <button type="button" onClick={() => fileInputRef.current?.click()}
+                className="w-full py-6 border border-dashed border-gray-300 rounded-lg text-sm text-gray-400 hover:border-accent hover:text-accent transition-colors cursor-pointer">
+                📷 Tap to add photo
+              </button>
+            )}
+            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={e => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = () => setPhoto(reader.result as string);
+              reader.readAsDataURL(file);
+            }} />
           </div>
 
           <div className="bg-white border border-gray-200 rounded-xl p-4">
